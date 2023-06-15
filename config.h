@@ -14,14 +14,7 @@ extern sem_t sem_load; /**/
 
 extern int done; /**/
 extern int sartu; /**/
-
-/*struct PCB
-{
-    long int pid;
-    int TTL;
-    int quantum;
-    struct PCB *next;
-};*/
-
+extern long freq1; /**/
+extern long freq2; /**/
 
 #endif /* CONFIG_H */

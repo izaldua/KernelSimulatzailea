@@ -2,7 +2,7 @@
 #include <pthread.h>
 #include "config.h"
 
-//struct PCB *root = NULL;
+struct PCB *root = NULL;
 
 void *scheduler()
 {

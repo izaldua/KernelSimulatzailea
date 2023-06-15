@@ -4,17 +4,19 @@
 #include "config.h"
 
 sem_t sem_sc;
+sem_t sem_load;
 
-void *timer_scheduler()
+void *timer_scheduler(long *freq)
 {
     printf("# Timer Scheduler: Ondo iritsi naiz timer-era.\n");
 
     int tick1 = 0;
+    long frek = *freq;
     pthread_mutex_lock(&mutex);
     while (1)
     {
         done++;
-        if (tick1 == 200)
+        if (tick1 == frek)
         {
             sem_post(&sem_sc);
             tick1 = 0;
@@ -29,18 +31,19 @@ void *timer_scheduler()
     }
 }
 
-void *timer_loader()
+void *timer_loader(long *freq)
 {
-    printf("# Timer2: Ondo iritsi naiz timer-era.\n");
+    printf("# Timer Loader: Ondo iritsi naiz timer-era.\n");
 
     int tick2 = 0;
+    long frek = *freq;
     pthread_mutex_lock(&mutex);
     while (1)
     {
         done++;
-        if (tick2 == 100)
+        if (tick2 == frek)
         {
-            printf("\nIEPE\n");
+            sem_post(&sem_load);
             tick2 = 0;
         }
         else

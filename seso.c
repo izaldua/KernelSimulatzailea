@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include <pthread.h>
+#include <stdlib.h>
 
 #include "config.h"
 #include "clock.h"
 #include "timer.h"
 #include "scheduler.h"
+#include "loader.h"
 
 int done;
 int sartu;
+long freq1;
+long freq2;
 
 pthread_mutex_t mutex;
 pthread_cond_t cond1, cond2;
@@ -15,6 +19,15 @@ pthread_cond_t cond1, cond2;
 int main(int argc, char *argv[])
 {
     printf("=========================\nSistema ondo hasieratu da\n=========================\n\n\n");
+
+    if (argc != 3)
+    {
+        printf("Argumentuak ez dira ondo pasatu\n");
+        return 1;
+    } else {
+        long freq1 = strtol(argv[1], NULL, 10);
+        long freq2 = strtol(argv[2], NULL, 10);
+    }
 
     // MUTEX eta bere testuinguru osoa hemen hasieratzen da
     pthread_mutex_init(&mutex, NULL);
@@ -29,13 +42,13 @@ int main(int argc, char *argv[])
 
     if (pthread_create(&erl, NULL, (void *)erlojua, NULL) != 0) // Hariak sortzeko momentuan existitzen badira dagoeneko, honek "errorea" bueltatuko du
         perror("Failed to create threads");
-    if (pthread_create(&tim_sc, NULL, (void *)timer_scheduler, NULL) != 0)
+    if (pthread_create(&tim_sc, NULL, (void *)timer_scheduler, &freq1) != 0)
         perror("Failed to create threads");
-    if (pthread_create(&tim2, NULL, (void *)timer_loader, NULL) != 0)
+    if (pthread_create(&tim2, NULL, (void *)timer_loader, &freq2) != 0)
         perror("Failed to create threads");
     if (pthread_create(&sched, NULL, (void *)scheduler, NULL) != 0)
         perror("Failed to create threads");
-    if (pthread_create(&load, NULL, (void *)load, NULL) != 0)
+    if (pthread_create(&load, NULL, (void *)loader, NULL) != 0)
         perror("Failed to create threads");
 
     printf("\n\n");
