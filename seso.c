@@ -25,15 +25,17 @@ int main(int argc, char *argv[])
     printf("Bigarren baldintza ondo hasieratu da\n");
 
     // HARIEN testuinguru osoa hemen hasieratzen da
-    pthread_t erl, tim_sc, tim2, sched;
+    pthread_t erl, tim_sc, tim2, sched, load;
 
     if (pthread_create(&erl, NULL, (void *)erlojua, NULL) != 0) // Hariak sortzeko momentuan existitzen badira dagoeneko, honek "errorea" bueltatuko du
         perror("Failed to create threads");
     if (pthread_create(&tim_sc, NULL, (void *)timer_scheduler, NULL) != 0)
         perror("Failed to create threads");
-    if (pthread_create(&tim2, NULL, &timer2, NULL) != 0)
+    if (pthread_create(&tim2, NULL, (void *)timer_loader, NULL) != 0)
         perror("Failed to create threads");
     if (pthread_create(&sched, NULL, (void *)scheduler, NULL) != 0)
+        perror("Failed to create threads");
+    if (pthread_create(&load, NULL, (void *)load, NULL) != 0)
         perror("Failed to create threads");
 
     printf("\n\n");
@@ -46,6 +48,8 @@ int main(int argc, char *argv[])
     if (pthread_join(tim2, NULL) != 0)
         perror("Failed to join threads");
     if (pthread_join(sched, NULL) != 0)
+        perror("Failed to join threads");
+    if (pthread_join(load, NULL) != 0)
         perror("Failed to join threads");
 
     printf("\n\n");

@@ -16,7 +16,6 @@ void *timer_scheduler()
         done++;
         if (tick1 == 200)
         {
-            printf("\nIEPA\n");
             sem_post(&sem_sc);
             tick1 = 0;
         }
@@ -30,7 +29,7 @@ void *timer_scheduler()
     }
 }
 
-void *timer2()
+void *timer_loader()
 {
     printf("# Timer2: Ondo iritsi naiz timer-era.\n");
 

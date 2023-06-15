@@ -2,6 +2,6 @@
 #define TIMER_H
 
 extern void *timer_scheduler();
-extern void *timer2();
+extern void *timer_loader();
 
  #endif /* TIMER_H */
