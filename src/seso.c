@@ -12,6 +12,7 @@
 
 int done;
 int sartu;
+int quantum;
 long freq1;
 long freq2;
 
@@ -22,16 +23,17 @@ int main(int argc, char *argv[])
 {
     printf("=========================\nSistema ondo hasieratu da\n=========================\n\n");
 
-    if (argc != 3)
+    if (argc != 4)
     {
         printf("Argumentuak ez dira ondo pasatu\n\n");
         printf("========================= Argumentuak nola pasa =========================\n\n");
-        printf("./seso <scheduler frequency> <loader frequency>\n\n");
+        printf("./seso <scheduler frequency> <loader frequency> <each process quantum>\n\n");
         printf("=========================================================================\n\n");
         return 1;
     } else {
         long freq1 = strtol(argv[1], NULL, 10);
         long freq2 = strtol(argv[2], NULL, 10);
+        int quantum = atoi(argv[3]);
     }
 
     // MUTEX eta bere testuinguru osoa hemen hasieratzen da

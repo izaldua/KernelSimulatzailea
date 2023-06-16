@@ -14,7 +14,9 @@ extern sem_t sem_load; /**/
 
 extern int done; /**/
 extern int sartu; /**/
+extern int quantum; /**/
 extern long freq1; /**/
 extern long freq2; /**/
+
 
 #endif /* CONFIG_H */

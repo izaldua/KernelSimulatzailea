@@ -5,6 +5,7 @@
 
 #include "config.h"
 #include "queue.h"
+#include "data.h"
 
 void initQueue(struct Queue *queue)
 {
@@ -64,6 +65,26 @@ struct PCB *peek(struct Queue *queue)
     return queue->first;
 }
 
+void *nextCommand(struct Queue *queue)
+{
+    if (isEmpty(queue))
+    {
+        printf("Ilara hutsik dago\n");
+        return NULL;
+    }
+    else if (queue->n >= 2)
+    {
+        int done = queue->first->pid;
+        struct PCB *lag = dequeue(queue);
+        enqueue(queue, lag);
+        while (queue->first->status == 0 && queue->first->pid != done)
+        {
+            lag = dequeue(queue);
+            enqueue(queue, lag);
+        }
+    }
+}
+
 void displayQueue(struct Queue *queue)
 {
     if (isEmpty(queue))
@@ -76,7 +97,7 @@ void displayQueue(struct Queue *queue)
     printf("Ilarako elementuak:\n");
     while (current != NULL)
     {
-        printf("PID: %ld, TTL: %d, Quantum: %d\n", current->pid, current->TTL, current->quantum);
+        printf("PID: %ld, Quantum: %d\n, Status: %d", current->pid, current->quantum, current->status);
         current = current->next;
     }
 }

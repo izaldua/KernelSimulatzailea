@@ -7,6 +7,7 @@
 #include "queue.h"
 
 // long size = sizeof(struct PCB);
+int ttl;
 
 void *scheduler()
 {
@@ -17,12 +18,21 @@ void *scheduler()
     while (1)
     {
         sem_wait(&sem_sc);
-        if (quantum == 0)
-            continue;
-        if (isEmpty(&queue) == 1)
+        ttl = 0;
+        while (ttl < quantum)
         {
-            printf("Ilara hutsik dago\n");
-            continue;
+            printf("# Scheduler: Deia ondo egin zait.\n");
+            if (isEmpty(&queue) == 1)
+            {
+                printf("Ilara hutsik dago\n");
+                continue;
+            }
+            else
+            {
+                // Hemen egin behar duen lana egin dezala
+            }
+            ttl++;
         }
+        nextCommand(&queue);
     }
 }
