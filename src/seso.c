@@ -3,11 +3,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "config.h"
+#include "config.h""
 #include "clock.h"
 #include "timer.h"
 #include "scheduler.h"
 #include "loader.h"
+#include "data.h"
 
 int done;
 int sartu;

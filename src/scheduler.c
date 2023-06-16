@@ -6,7 +6,7 @@
 #include "config.h"
 #include "queue.h"
 
-//long size = sizeof(struct PCB);
+// long size = sizeof(struct PCB);
 
 void *scheduler()
 {
@@ -17,7 +17,8 @@ void *scheduler()
     while (1)
     {
         sem_wait(&sem_sc);
-
+        if (quantum == 0)
+            continue;
         if (isEmpty(&queue) == 1)
         {
             printf("Ilara hutsik dago\n");

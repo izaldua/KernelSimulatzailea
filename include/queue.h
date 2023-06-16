@@ -1,14 +1,6 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-struct PCB
-{
-    long int pid;
-    int TTL;
-    int quantum;
-    struct PCB *next;
-};
-
 struct Queue
 {
     struct PCB *first;
