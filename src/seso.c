@@ -29,23 +29,16 @@ void signalHandler(int signum)
 {
     free(memory);
 
-    if (pthread_join(erl, NULL) != 0)
-        perror("Failed to join threads");
-    if (pthread_join(tim_sc, NULL) != 0)
-        perror("Failed to join threads");
-    if (pthread_join(tim2, NULL) != 0)
-        perror("Failed to join threads");
-    if (pthread_join(sched, NULL) != 0)
-        perror("Failed to join threads");
-    if (pthread_join(load, NULL) != 0)
-        perror("Failed to join threads");
-
-    pthread_mutex_destroy(&mutex);
-    printf("Mutexa ondo amaitu da\n");
-    pthread_cond_destroy(&cond1);
-    printf("Lehen baldintza ondo amaitu da\n");
-    pthread_cond_destroy(&cond2);
-    printf("Bigarren baldintza ondo amaitu da\n");
+    if (pthread_cancel(erl) != 0)
+        perror("Failed to cancel erl thread");
+    if (pthread_cancel(tim_sc) != 0)
+        perror("Failed to cancel tim_sc thread");
+    if (pthread_cancel(tim2) != 0)
+        perror("Failed to cancel tim2 thread");
+    if (pthread_cancel(sched) != 0)
+        perror("Failed to cancel sched thread");
+    if (pthread_cancel(load) != 0)
+        perror("Failed to cancel load thread");
 
     printf("\n\n Amaiera forzatua egin da\n\n");
 
@@ -75,6 +68,8 @@ int main(int argc, char *argv[])
 
     unsigned char *memory = initMemory();
 
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+    pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
     signal(SIGINT, signalHandler);
 
     // MUTEX eta bere testuinguru osoa hemen hasieratzen da
